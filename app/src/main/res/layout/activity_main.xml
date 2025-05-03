@@ -12,16 +12,16 @@
     <ImageView
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:id="@+id/ivLogo"
-        android:background="@drawable/ic_launcher_background"
+        android:id="@+id/ivIntro"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="50dp"
+        android:background="@drawable/ic_launcher_background"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome to DoJo Movie"
-        android:textStyle="bold"
+        android:fontFamily="@font/sarabun_bold"
         android:layout_gravity="center"
         android:textSize="20sp"
         android:layout_marginTop="30dp"
@@ -35,35 +35,37 @@
         android:textAlignment="center"
         android:textSize="16sp"
         android:layout_marginTop="10dp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:fontFamily="@font/sarabun_regular"/>
 
     <Button
         android:id="@+id/btnExplore"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/btn_primary"
+        android:layout_marginTop="80dp"
         android:padding="5dp"
+        android:backgroundTint="#E9BE5F"
         android:text="Start Exploring"
         android:textColor="#272822"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/sarabun_bold"
+        app:cornerRadius="10dp" />
 
-
-
-    <!--    <Button-->
-<!--        android:id="@+id/btnNewDojo"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:backgroundTint="#E9BE5F"-->
-<!--        android:text="Start Exploring"-->
-<!--        android:textColor="#272822"-->
-<!--        android:textSize="16sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:cornerRadius="10dp"-->
-<!--        android:padding="5dp"/>-->
+    <Button
+        android:id="@+id/btnNewDojo"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#00FFFFFF"
+        android:padding="5dp"
+        android:text="Start Exploring"
+        android:textColor="#E9BE5F"
+        android:textSize="16sp"
+        android:fontFamily="@font/sarabun_bold"
+        app:cornerRadius="10dp"
+        app:strokeColor="#E9BE5F"
+        app:strokeWidth="1dp" />
 
 </LinearLayout>
