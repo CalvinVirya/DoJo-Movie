@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var btnExplore: Button
     lateinit var ivIntro: ImageView
+    lateinit var btnNewDojo : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         btnExplore = findViewById(R.id.btnExplore)
+        btnNewDojo = findViewById(R.id.btnNewDojo)
         ivIntro = findViewById(R.id.ivIntro)
 
         val assetManager = assets
@@ -33,5 +35,9 @@ class MainActivity : AppCompatActivity() {
             var intent = Intent(MainActivity@this, LoginActivity::class.java)
             startActivity(intent)
         }
+        btnNewDojo.setOnClickListener({
+            var intent = Intent(MainActivity@this, RegisterActivity::class.java)
+            startActivity(intent)
+        })
     }
 }

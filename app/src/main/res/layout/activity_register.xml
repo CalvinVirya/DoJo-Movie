@@ -67,15 +67,36 @@
             android:padding="10dp"
             android:fontFamily="@font/sarabun_regular"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm Password"
+            android:textColor="@color/white"
+            android:fontFamily="@font/sarabun_regular"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/etComfirmPassword"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white"
+            android:background="@drawable/edit_text_custom"
+            android:textSize="16sp"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:fontFamily="@font/sarabun_regular"/>
+
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnRegister"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:padding="5dp"
             android:backgroundTint="#E9BE5F"
-            android:text="Login"
+            android:text="Register"
             android:textColor="#272822"
             android:textSize="16sp"
             android:fontFamily="@font/sarabun_bold"
@@ -87,22 +108,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center"
-        android:layout_marginTop="160dp">
+        android:layout_marginTop="90dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Didn’t have an account?"
+            android:text="Already has an account?"
             android:textColor="@color/white"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvRegisterHere"
-            android:text="Register Here"
+            android:id="@+id/tvLogInHere"
+            android:text="Log in here"
             android:textColor="#E9BE5F"
             android:textStyle="bold"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="5dp" />
     </LinearLayout>
 
 

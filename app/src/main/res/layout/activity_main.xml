@@ -60,7 +60,7 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="#00FFFFFF"
         android:padding="5dp"
-        android:text="Start Exploring"
+        android:text="New to DoJo Movie"
         android:textColor="#E9BE5F"
         android:textSize="16sp"
         android:fontFamily="@font/sarabun_bold"

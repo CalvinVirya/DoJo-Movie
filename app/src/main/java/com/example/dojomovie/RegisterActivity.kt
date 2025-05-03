@@ -11,20 +11,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class LoginActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
 
     lateinit var ivLogo: ImageView
-    lateinit var tvRegisterHere: TextView
-    lateinit var btnLogin: Button
+    lateinit var tvLogInHere: TextView
+    lateinit var btnRegister: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_register)
 
         ivLogo = findViewById(R.id.ivLogo)
-        tvRegisterHere = findViewById(R.id.tvRegisterHere)
-        btnLogin = findViewById(R.id.btnLogin)
+        tvLogInHere = findViewById(R.id.tvLogInHere)
+        btnRegister = findViewById(R.id.btnRegister)
 
         val assetManager = assets
         val inputStream = assetManager.open("logo.png")
@@ -32,13 +32,13 @@ class LoginActivity : AppCompatActivity() {
         ivLogo.setImageDrawable(drawable)
         ivLogo.background = null
 
-        tvRegisterHere.setOnClickListener{
-            var intent = Intent(LoginActivity@this, RegisterActivity::class.java)
+        tvLogInHere.setOnClickListener{
+            var intent = Intent(RegisterActivity@this, LoginActivity::class.java)
             startActivity(intent)
         }
 
-        btnLogin.setOnClickListener{
-            var intent = Intent(LoginActivity@this, OtpPage::class.java)
+        btnRegister.setOnClickListener{
+            var intent = Intent(RegisterActivity@this, OtpPage::class.java)
             startActivity(intent)
         }
 
