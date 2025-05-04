@@ -17,4 +17,89 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Verification Code Here"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:fontFamily="@font/sarabun_regular"/>
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="OTP has been sent via SMS Please don’t share this OTP to anyone else"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textColor="#595B56"
+        android:layout_marginTop="10dp"/>
+
+    <com.chaos.view.PinView
+        android:id="@+id/pvOtp"
+        style="@style/PinWidget.PinView"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:cursorVisible="true"
+        android:inputType="number"
+        android:textColor="@color/white"
+        android:fontFamily="@font/sarabun_regular"
+        android:textSize="16sp"
+        app:cursorColor="#595B56"
+        app:cursorWidth="2dp"
+        app:hideLineWhenFilled="false"
+        app:itemCount="4"
+        app:itemHeight="60dp"
+        app:itemRadius="10dp"
+        app:itemSpacing="10dp"
+        app:itemWidth="60dp"
+        app:lineColor="#595B56"
+        app:lineWidth="1.5dp"
+        app:viewType="rectangle"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tvResend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resend Code"
+            android:textColor="#595B56"
+            android:fontFamily="@font/sarabun_regular"
+            android:textSize="16sp"
+            android:enabled="false"/>
+
+        <TextView
+            android:id="@+id/tvCountdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/sarabun_regular"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnVerify"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:padding="5dp"
+        android:backgroundTint="#E9BE5F"
+        android:text="Verify"
+        android:textColor="#272822"
+        android:textSize="16sp"
+        android:fontFamily="@font/sarabun_bold"
+        app:cornerRadius="10dp" />
+
 </LinearLayout>
