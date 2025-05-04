@@ -12,12 +12,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.dojomovie.util.DB
 
 class LoginActivity : AppCompatActivity() {
 
     lateinit var ivLogo: ImageView
     lateinit var tvRegisterHere: TextView
     lateinit var btnLogin: Button
+    lateinit var etPhoneNumber: EditText
+    lateinit var etPassword: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,8 @@ class LoginActivity : AppCompatActivity() {
         ivLogo = findViewById(R.id.ivLogo)
         tvRegisterHere = findViewById(R.id.tvRegisterHere)
         btnLogin = findViewById(R.id.btnLogin)
+        etPhoneNumber = findViewById(R.id.etPhoneNumber)
+        etPassword = findViewById(R.id.etPassword)
 
         val assetManager = assets
         val inputStream = assetManager.open("logo.png")
@@ -40,9 +45,25 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener{
-            var intent = Intent(LoginActivity@this, OtpPage::class.java)
-            startActivity(intent)
+            signIn()
         }
 
     }
+
+    fun signIn() {
+        val phoneNumber = etPhoneNumber.text.toString()
+        val password = etPassword.text.toString()
+
+        DB.login(phoneNumber, password)
+
+        if (DB.LOGGED_IN_USER == null) {
+            return
+        }
+
+        var intent = Intent(LoginActivity@this, OtpPage::class.java)
+        startActivity(intent)
+
+        finish()
+    }
+
 }
