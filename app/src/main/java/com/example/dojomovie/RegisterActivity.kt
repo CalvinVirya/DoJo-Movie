@@ -12,6 +12,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.dojomovie.model.User
 import com.example.dojomovie.util.DB
 import kotlin.math.sign
 
@@ -58,7 +59,8 @@ class RegisterActivity : AppCompatActivity() {
         val confirmPassword = etConfirmPassword.text.toString()
 
         if(password == confirmPassword){
-            DB.insertNewUser(this@RegisterActivity, phoneNumber, password)
+            DB.register(phoneNumber, password)
+//            Toast.makeText(applicationContext, DB.REGISTERED_USER?.phoneNumber ?: return, Toast.LENGTH_SHORT).show()
             Toast.makeText(applicationContext, "Register Successful", Toast.LENGTH_SHORT).show()
             var intent = Intent(RegisterActivity@this, OtpPage::class.java)
             startActivity(intent)

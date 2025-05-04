@@ -48,6 +48,8 @@ class DB {
         }
 
         var LOGGED_IN_USER: User? = null
+        var REGISTERED_USER: User? = null
+
         fun login(phoneNumber: String, password: String){
             for(user in userList){
                 if(user.phoneNumber == phoneNumber && user.password == password){
@@ -55,6 +57,15 @@ class DB {
                     return
                 }
             }
+        }
+
+        fun register(phoneNumber: String, password: String){
+            for(user in userList){
+                if(user.phoneNumber == phoneNumber){
+                    return
+                }
+            }
+            REGISTERED_USER = User(0, phoneNumber, password)
         }
 
     }

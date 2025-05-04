@@ -60,10 +60,10 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        var intent = Intent(LoginActivity@this, OtpPage::class.java)
-        startActivity(intent)
+//        var intent = Intent(LoginActivity@this, OtpPage::class.java)
+//        startActivity(intent)
 
-        finish()
+//        finish()
     }
 
 }
