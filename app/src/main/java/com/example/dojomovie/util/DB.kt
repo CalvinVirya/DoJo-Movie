@@ -68,5 +68,10 @@ class DB {
             REGISTERED_USER = User(0, phoneNumber, password)
         }
 
+        fun signOut(){
+            REGISTERED_USER = null
+            LOGGED_IN_USER = null
+        }
+
     }
 }

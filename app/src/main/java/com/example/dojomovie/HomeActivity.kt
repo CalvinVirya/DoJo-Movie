@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.dojomovie.util.DB
 
 class HomeActivity : AppCompatActivity() {
 
@@ -25,6 +26,8 @@ class HomeActivity : AppCompatActivity() {
             val editor = sharedPreferences.edit()
             editor.putBoolean("isLoggedIn", false)
             editor.apply()
+
+            DB.signOut()
 
             var intent = Intent(HomeActivity@this, MainActivity::class.java)
             startActivity(intent)

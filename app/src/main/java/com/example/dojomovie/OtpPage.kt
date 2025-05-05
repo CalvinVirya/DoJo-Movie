@@ -14,11 +14,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.dojomovie.model.User
 import com.example.dojomovie.util.DB
-import org.w3c.dom.Text
 
 class OtpPage : AppCompatActivity() {
 
@@ -42,14 +38,17 @@ class OtpPage : AppCompatActivity() {
 
         smsManager = SmsManager.getDefault()
 
-        var phone = DB.REGISTERED_USER?.phoneNumber
-        var password = DB.REGISTERED_USER?.password
+        var phoneRegist = DB.REGISTERED_USER?.phoneNumber
+        var passwordRegist = DB.REGISTERED_USER?.password
+        var phoneLogin = DB.LOGGED_IN_USER?.phoneNumber
         var otp = generateOTP()
 
-//        Toast.makeText(applicationContext, phone, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(applicationContext, DB.LOGGED_IN_USER?.phoneNumber ?: "unknown", Toast.LENGTH_SHORT).show()
 
-        if (phone != null) {
-            checkSMSPermission(phone, otp)
+        if (phoneRegist != null) {
+            checkSMSPermission(phoneRegist, otp)
+        } else if(phoneLogin != null){
+            checkSMSPermission(phoneLogin, otp)
         }
 
         val assetManager = assets
@@ -63,24 +62,28 @@ class OtpPage : AppCompatActivity() {
 
         tvResend.setOnClickListener{
 //            Toast.makeText(applicationContext, "resend tapped", Toast.LENGTH_SHORT).show()
-            if (phone != null) {
-                checkSMSPermission(phone, generateOTP())
+            if (phoneRegist != null) {
+                otp = generateOTP()
+                checkSMSPermission(phoneRegist, otp)
+            } else if(phoneLogin != null){
+                otp = generateOTP()
+                checkSMSPermission(phoneLogin, otp)
             }
             startCountdown()
         }
 
         btnVerify.setOnClickListener{
-            if (otp == pvOtp.text.toString() || pvOtp.text.toString() == "000000"){
+            if (otp == pvOtp.text.toString()){
                 if (DB.REGISTERED_USER != null){
-                    DB.insertNewUser(this@OtpPage, phone.toString(), password.toString())
+                    if (phoneRegist != null && passwordRegist != null) {
+                        DB.insertNewUser(this@OtpPage, phoneRegist, passwordRegist)
+                    }
 
                     var intent = Intent(OtpPage@this, LoginActivity::class.java)
                     startActivity(intent)
 
                     finish()
-                }
-                
-                if (DB.LOGGED_IN_USER != null){
+                } else if (DB.LOGGED_IN_USER != null){
                     //shared preference buat kalo udah login ga usah login lagi (sementara aja)
                     val sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE)
                     val editor = sharedPreferences.edit()
@@ -138,6 +141,7 @@ class OtpPage : AppCompatActivity() {
     fun sendOTP(phonenumber: String, OTP: String){
         val message = "Kode OTP Anda adalah $OTP. Jangan berikan kepada siapapun."
         smsManager.sendTextMessage(phonenumber, null, message, null, null)
+        Toast.makeText(applicationContext, "OTP has been sent", Toast.LENGTH_SHORT).show()
     }
 
 }
