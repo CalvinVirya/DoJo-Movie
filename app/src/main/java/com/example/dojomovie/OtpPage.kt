@@ -37,11 +37,12 @@ class OtpPage : AppCompatActivity() {
         smsManager = SmsManager.getDefault()
 
         var phone = DB.REGISTERED_USER?.phoneNumber
+        var otp = generateOTP()
 
-//        Toast.makeText(applicationContext, phone, Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, phone, Toast.LENGTH_SHORT).show()
 
         if (phone != null) {
-            checkSMSPermission(phone, generateOTP())
+            checkSMSPermission(phone, otp)
         }
 
         val assetManager = assets
