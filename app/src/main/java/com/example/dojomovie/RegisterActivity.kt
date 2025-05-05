@@ -49,8 +49,20 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         btnRegister.setOnClickListener{
-            signUp()
+            if(!validateInput(etPhoneNumber) && !validateInput(etPassword) && !validateInput(etConfirmPassword)){
+                signUp()
+            } else{
+                Toast.makeText(applicationContext, "Cannot be empty", Toast.LENGTH_SHORT).show()
+            }
         }
+    }
+
+    fun validateInput(editText: EditText) : Boolean{
+        return editText.text.toString().trim().isEmpty()
+    }
+
+    fun validatePasswordLength(editText: String): Boolean{
+        return editText.toString().trim().length >= 8
     }
 
     fun signUp(){
@@ -58,14 +70,14 @@ class RegisterActivity : AppCompatActivity() {
         val password = etPassword.text.toString()
         val confirmPassword = etConfirmPassword.text.toString()
 
-        if(password == confirmPassword){
+        if(password == confirmPassword && validatePasswordLength(password)){
             DB.register(phoneNumber, password)
 //            Toast.makeText(applicationContext, DB.REGISTERED_USER?.phoneNumber ?: return, Toast.LENGTH_SHORT).show()
-            Toast.makeText(applicationContext, "Register Successful", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(applicationContext, "Register Successful", Toast.LENGTH_SHORT).show()
             var intent = Intent(RegisterActivity@this, OtpPage::class.java)
             startActivity(intent)
         }else{
-            Toast.makeText(applicationContext, "Password not matched", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "Password not matched or at least 8 characters", Toast.LENGTH_SHORT).show()
         }
 //        finish()
     }

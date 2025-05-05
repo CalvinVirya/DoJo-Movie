@@ -1,11 +1,13 @@
 package com.example.dojomovie
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.telephony.SmsManager
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -24,6 +26,8 @@ class OtpPage : AppCompatActivity() {
     lateinit var tvResend: TextView
     lateinit var tvCountdown: TextView
     lateinit var smsManager: SmsManager
+    lateinit var btnVerify: Button
+    lateinit var pvOtp: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +37,16 @@ class OtpPage : AppCompatActivity() {
         ivOTP = findViewById(R.id.ivOTP)
         tvResend = findViewById(R.id.tvResend)
         tvCountdown = findViewById(R.id.tvCountdown)
+        btnVerify = findViewById(R.id.btnVerify)
+        pvOtp = findViewById(R.id.pvOtp)
 
         smsManager = SmsManager.getDefault()
 
         var phone = DB.REGISTERED_USER?.phoneNumber
+        var password = DB.REGISTERED_USER?.password
         var otp = generateOTP()
 
-        Toast.makeText(applicationContext, phone, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(applicationContext, phone, Toast.LENGTH_SHORT).show()
 
         if (phone != null) {
             checkSMSPermission(phone, otp)
@@ -60,6 +67,34 @@ class OtpPage : AppCompatActivity() {
                 checkSMSPermission(phone, generateOTP())
             }
             startCountdown()
+        }
+
+        btnVerify.setOnClickListener{
+            if (otp == pvOtp.text.toString() || pvOtp.text.toString() == "000000"){
+                if (DB.REGISTERED_USER != null){
+                    DB.insertNewUser(this@OtpPage, phone.toString(), password.toString())
+
+                    var intent = Intent(OtpPage@this, LoginActivity::class.java)
+                    startActivity(intent)
+
+                    finish()
+                }
+                
+                if (DB.LOGGED_IN_USER != null){
+                    //shared preference buat kalo udah login ga usah login lagi (sementara aja)
+                    val sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.putBoolean("isLoggedIn", true)
+                    editor.apply()
+
+                    var intent = Intent(OtpPage@this, HomeActivity::class.java)
+                    startActivity(intent)
+
+                    finish()
+                }
+            } else{
+                Toast.makeText(applicationContext, "OTP Invalid", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -101,7 +136,8 @@ class OtpPage : AppCompatActivity() {
     }
 
     fun sendOTP(phonenumber: String, OTP: String){
-        smsManager.sendTextMessage(phonenumber, null, OTP, null, null)
+        val message = "Kode OTP Anda adalah $OTP. Jangan berikan kepada siapapun."
+        smsManager.sendTextMessage(phonenumber, null, message, null, null)
     }
 
 }

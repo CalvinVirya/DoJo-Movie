@@ -45,9 +45,17 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener{
-            signIn()
+            if (!validateInput(etPhoneNumber) && !validateInput(etPassword)){
+                signIn()
+            } else{
+                Toast.makeText(applicationContext, "Cannot be empty", Toast.LENGTH_SHORT).show()
+            }
         }
 
+    }
+
+    fun validateInput(editText: EditText) : Boolean{
+        return editText.text.toString().trim().isEmpty()
     }
 
     fun signIn() {
@@ -57,13 +65,14 @@ class LoginActivity : AppCompatActivity() {
         DB.login(phoneNumber, password)
 
         if (DB.LOGGED_IN_USER == null) {
+            Toast.makeText(applicationContext, "Account not found", Toast.LENGTH_SHORT).show()
             return
         }
 
-//        var intent = Intent(LoginActivity@this, OtpPage::class.java)
-//        startActivity(intent)
+        var intent = Intent(LoginActivity@this, OtpPage::class.java)
+        startActivity(intent)
 
-//        finish()
+        finish()
     }
 
 }
