@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity"
+    android:orientation="vertical"
+    android:background="#272822">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/ivBack"
+            android:background="@drawable/ic_launcher_background"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sarabun_bold"
+            android:gravity="center"
+            android:text="Profile"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:background="@drawable/profile_custom">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/ivProfile"
+            android:background="@drawable/ic_launcher_background"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sarabun_bold"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white"/>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:backgroundTint="#E9BE5F"
+        android:text="Logout"
+        android:textColor="#272822"
+        android:textSize="16sp"
+        android:fontFamily="@font/sarabun_bold"
+        app:cornerRadius="10dp"
+        android:layout_marginTop="500dp"/>
+</LinearLayout>

@@ -72,13 +72,10 @@ class RegisterActivity : AppCompatActivity() {
 
         if(password == confirmPassword && validatePasswordLength(password)){
             DB.register(phoneNumber, password)
-//            Toast.makeText(applicationContext, DB.REGISTERED_USER?.phoneNumber ?: return, Toast.LENGTH_SHORT).show()
-//            Toast.makeText(applicationContext, "Register Successful", Toast.LENGTH_SHORT).show()
             var intent = Intent(RegisterActivity@this, OtpPage::class.java)
             startActivity(intent)
         }else{
             Toast.makeText(applicationContext, "Password not matched or at least 8 characters", Toast.LENGTH_SHORT).show()
         }
-//        finish()
     }
 }

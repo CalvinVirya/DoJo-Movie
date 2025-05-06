@@ -43,7 +43,8 @@ class OtpPage : AppCompatActivity() {
         var phoneLogin = DB.LOGGED_IN_USER?.phoneNumber
         var otp = generateOTP()
 
-//        Toast.makeText(applicationContext, DB.LOGGED_IN_USER?.phoneNumber ?: "unknown", Toast.LENGTH_SHORT).show()
+        //TODO: JANGAN LUPA DIHAPUS YA BANG NANTI KETAHUAN RAHASIA KITA XIXIXI
+        pvOtp.setText(otp)
 
         if (phoneRegist != null) {
             checkSMSPermission(phoneRegist, otp)
@@ -57,11 +58,10 @@ class OtpPage : AppCompatActivity() {
         ivOTP.setImageDrawable(drawable)
         ivOTP.background = null
 
-//        start countdown buat resend OTP
+        //start countdown buat resend OTP
         startCountdown()
 
         tvResend.setOnClickListener{
-//            Toast.makeText(applicationContext, "resend tapped", Toast.LENGTH_SHORT).show()
             if (phoneRegist != null) {
                 otp = generateOTP()
                 checkSMSPermission(phoneRegist, otp)
@@ -84,11 +84,12 @@ class OtpPage : AppCompatActivity() {
 
                     finish()
                 } else if (DB.LOGGED_IN_USER != null){
-                    //shared preference buat kalo udah login ga usah login lagi (sementara aja)
                     val sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE)
                     val editor = sharedPreferences.edit()
                     editor.putBoolean("isLoggedIn", true)
+                    editor.putString("userPhoneNumber", phoneLogin)
                     editor.apply()
+
 
                     var intent = Intent(OtpPage@this, HomeActivity::class.java)
                     startActivity(intent)

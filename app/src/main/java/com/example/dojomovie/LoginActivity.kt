@@ -69,8 +69,6 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-//        Toast.makeText(applicationContext, DB.REGISTERED_USER?.phoneNumber ?: "unknown", Toast.LENGTH_SHORT).show()
-
         if (DB.REGISTERED_USER != null){
             var intent = Intent(LoginActivity@this, HomeActivity::class.java)
             startActivity(intent)

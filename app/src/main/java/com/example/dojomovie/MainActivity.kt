@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         if(isLoggedIn){
             var intent = Intent(MainActivity@this, HomeActivity::class.java)
             startActivity(intent)
+
+            finish()
         }
 
         btnExplore.setOnClickListener {
