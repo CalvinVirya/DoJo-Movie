@@ -1,11 +1,15 @@
 package com.example.dojomovie.util
 
 import android.content.Context
+import com.example.dojomovie.model.Film
+import com.example.dojomovie.model.Transaction
 import com.example.dojomovie.model.User
 
 class DB {
     companion object{
         var userList = mutableListOf<User>()
+        var filmList = mutableListOf<Film>()
+        var transactionList = mutableListOf<Transaction>()
 
         var HAS_SYNC = false
 
@@ -14,17 +18,41 @@ class DB {
 
             var helper = Helper(ctx)
             var db = helper.readableDatabase
-            var cursor = db.rawQuery("SELECT * FROM user", null)
+            var cursorUser = db.rawQuery("SELECT * FROM user", null)
+            var cursorFilm = db.rawQuery("SELECT * FROM film", null)
+            var cursorTransaction = db.rawQuery("SELECT * FROM transactions", null)
 
             userList.clear()
-            while (cursor.moveToNext()){
-                var id = cursor.getInt(0)
-                var phoneNumber = cursor.getString(1)
-                var password = cursor.getString(2)
+            while (cursorUser.moveToNext()){
+                var id = cursorUser.getInt(0)
+                var phoneNumber = cursorUser.getString(1)
+                var password = cursorUser.getString(2)
                 var temp = User(id, phoneNumber, password)
                 userList.add(temp)
             }
-            cursor.close()
+            cursorUser.close()
+
+            filmList.clear()
+            while (cursorFilm.moveToNext()){
+                var id = cursorFilm.getString(0)
+                var title = cursorFilm.getString(1)
+                var image = cursorFilm.getString(2)
+                var price = cursorFilm.getInt(3)
+                var temp = Film(id, title, image, price)
+                filmList.add(temp)
+            }
+            cursorFilm.close()
+
+            transactionList.clear()
+            while (cursorTransaction.moveToNext()){
+                var id = cursorTransaction.getInt(0)
+                var userId = cursorTransaction.getInt(1)
+                var filmId = cursorTransaction.getInt(2)
+                var quantity = cursorTransaction.getInt(3)
+                var temp = Transaction(id, userId, filmId, quantity)
+                transactionList.add(temp)
+            }
+            cursorTransaction.close()
 
             HAS_SYNC = true
 
@@ -44,6 +72,35 @@ class DB {
             var db = helper.writableDatabase
             db.execSQL("INSERT INTO user (phone_number, password)" +
                     "VALUES ('"+phoneNumber+"', '"+password+"')"
+            )
+        }
+
+        fun insertNewFilm(ctx: Context, id: String, title: String, image: String, price: Int){
+            var temp = Film(id, title, image, price)
+            filmList.add(temp)
+
+            // insert in SQLite
+            var helper = Helper(ctx)
+            var db = helper.writableDatabase
+            db.execSQL("INSERT INTO film (film_id, film_title, film_image, film_price)" +
+                    "VALUES ('"+id+"', '"+title+"', '"+image+"', '"+price+"')"
+            )
+        }
+
+        fun insertNewTransaction(ctx: Context, userId: Int, filmId: Int, quantity: Int){
+            // generate id
+            var id = 1
+            if(userList.size >= 1){
+                userList.last().id + 1
+            }
+            var temp = Transaction(id, userId, filmId, quantity)
+            transactionList.add(temp)
+
+            // insert in SQLite
+            var helper = Helper(ctx)
+            var db = helper.writableDatabase
+            db.execSQL("INSERT INTO transactions (film_title, film_image, film_price)" +
+                    "VALUES ('"+userId+"', '"+filmId+"', '"+quantity+"')"
             )
         }
 

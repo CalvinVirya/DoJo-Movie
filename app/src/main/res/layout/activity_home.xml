@@ -43,6 +43,13 @@
                 android:text="home"
                 android:textColor="@color/white"
                 android:layout_gravity="center"/>
+            
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rvFilmList"
+                tools:listitem="@layout/list_item_film"
+                android:orientation="horizontal"/>
 
         </LinearLayout>
 
