@@ -12,8 +12,13 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.Volley
 import com.example.dojomovie.adapters.FilmGalleryAdapter
 import com.example.dojomovie.model.Film
+import com.example.dojomovie.util.DB
 import com.google.android.material.navigation.NavigationView
 import org.json.JSONArray
 
@@ -22,47 +27,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var drawerLayout: DrawerLayout
     lateinit var rvFilmList: RecyclerView
     lateinit var filmAdapter: FilmGalleryAdapter
+    private lateinit var requestQueue: RequestQueue
 
-        companion object {
-            val filmList: MutableList<Film> = run {
-                val responseData = """[
-              {
-                "id": "MV001",
-                "image": "pathToImage",
-                "price": 30000,
-                "title": "Kongzilla"
-              },
-              {
-                "id": "MV002",
-                "image": "pathToImage",
-                "price": 45000,
-                "title": "Final Fantalion"
-              },
-              {
-                "id": "MV003",
-                "image": "pathToImage",
-                "price": 40000,
-                "title": "Bond Jampshoot"
-              }
-            ]"""
-
-                val jsonArray = JSONArray(responseData)
-                val filmList = mutableListOf<Film>()
-
-                for (i in 0 until jsonArray.length()) {
-                    val obj = jsonArray.getJSONObject(i)
-                    val id = obj.getString("id")
-                    val image = obj.getString("image")
-                    val price = obj.getInt("price")
-                    val title = obj.getString("title")
-
-                    filmList.add(Film(id, title, image, price))
-                }
-
-                filmList
-            }
-        }
-
+    companion object {
+        val filmList = mutableListOf<Film>()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,14 +41,32 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout = findViewById(R.id.drawer_layout)
 
         rvFilmList = findViewById(R.id.rvFilmList)
-        filmAdapter = FilmGalleryAdapter(filmList, this@HomeActivity)
 
+        requestQueue = Volley.newRequestQueue(this@HomeActivity)
+
+        filmAdapter = FilmGalleryAdapter(filmList, this@HomeActivity)
         rvFilmList.layoutManager = object : LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false) {
             override fun canScrollHorizontally(): Boolean {
                 return false
             }
         }
         rvFilmList.adapter = filmAdapter
+
+        val url = "https://api.npoint.io/66cce8acb8f366d2a508"
+
+        val request = JsonArrayRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                filmList.clear()
+                filmList.addAll(parseJson(response))
+                filmAdapter.notifyDataSetChanged()
+            },
+            { error ->
+                error.printStackTrace()
+            }
+        )
+        requestQueue.add(request)
+
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -116,4 +103,20 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
+    private fun parseJson(jsonArray: JSONArray): MutableList<Film> {
+        val result = mutableListOf<Film>()
+        for (i in 0 until jsonArray.length()) {
+            val obj = jsonArray.getJSONObject(i)
+            val id = obj.getString("id")
+            val image = obj.getString("image")
+            val price = obj.getInt("price")
+            val title = obj.getString("title")
+
+            result.add(Film(id, title, image, price))
+            DB.insertNewFilm(this@HomeActivity, id, title, image, price)
+        }
+        return result
+    }
+
 }

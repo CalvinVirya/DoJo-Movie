@@ -8,6 +8,7 @@
 
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -40,10 +41,6 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
-        <activity
-            android:name=".activity_login"
-            android:exported="false"
-            tools:ignore="MissingClass" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

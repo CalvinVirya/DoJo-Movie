@@ -14,6 +14,7 @@ json = "20250107"
 glide = "5.0.0-rc01"
 imageslideshow = "Tag"
 imageslideshowVersion = "0.1.2"
+volley = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -29,6 +30,7 @@ json = { group = "org.json", name = "json", version.ref = "json" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 imageslideshow = { group = "com.github.denzcoskun", name = "ImageSlideshow", version.ref = "imageslideshow" }
 denzcoskun-imageslideshow = { group = "com.github.denzcoskun", name = "ImageSlideshow", version.ref = "imageslideshowVersion" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
