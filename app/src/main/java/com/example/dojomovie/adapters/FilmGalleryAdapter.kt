@@ -2,6 +2,7 @@ package com.example.dojomovie.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,10 @@ class FilmGalleryAdapter(
         var film = data[position]
         holder.bind(film)
         holder.setValue()
+
+        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
+        val itemCount = data.size
+        holder.itemView.layoutParams.width = screenWidth / itemCount
 
         holder.llItemFilm.setOnClickListener{
             var intent = Intent(ctx, FilmDetailActivity::class.java).apply {

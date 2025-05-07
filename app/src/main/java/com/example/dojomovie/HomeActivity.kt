@@ -10,15 +10,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dojomovie.adapters.FilmGalleryAdapter
 import com.example.dojomovie.model.Film
 import com.google.android.material.navigation.NavigationView
 import org.json.JSONArray
-import org.json.JSONObject
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -77,8 +74,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         rvFilmList = findViewById(R.id.rvFilmList)
         filmAdapter = FilmGalleryAdapter(filmList, this@HomeActivity)
 
-
-        rvFilmList.layoutManager = LinearLayoutManager(this@HomeActivity)
+        rvFilmList.layoutManager = object : LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false) {
+            override fun canScrollHorizontally(): Boolean {
+                return false
+            }
+        }
         rvFilmList.adapter = filmAdapter
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -92,7 +92,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.drawerArrowDrawable.color = Color.parseColor("#E9BE5F")
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

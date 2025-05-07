@@ -32,26 +32,23 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Movies"
+            android:fontFamily="@font/sarabun_bold"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginLeft="20dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="home"
-                android:textColor="@color/white"
-                android:layout_gravity="center"/>
-            
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rvFilmList"
-                tools:listitem="@layout/list_item_film"
-                android:orientation="horizontal"/>
-
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:id="@+id/rvFilmList"
+            tools:listitem="@layout/list_item_film"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
 
     </LinearLayout>
 

@@ -10,11 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.dojomovie.model.User
 import com.example.dojomovie.util.DB
-import kotlin.math.sign
 
 class RegisterActivity : AppCompatActivity() {
 

@@ -11,6 +11,9 @@ activity = "1.8.0"
 constraintlayout = "2.1.4"
 pinview = "1.4.4"
 json = "20250107"
+glide = "5.0.0-rc01"
+imageslideshow = "Tag"
+imageslideshowVersion = "0.1.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -23,6 +26,9 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 pinview = { group = "io.github.chaosleung", name = "pinview", version.ref = "pinview" }
 json = { group = "org.json", name = "json", version.ref = "json" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+imageslideshow = { group = "com.github.denzcoskun", name = "ImageSlideshow", version.ref = "imageslideshow" }
+denzcoskun-imageslideshow = { group = "com.github.denzcoskun", name = "ImageSlideshow", version.ref = "imageslideshowVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
