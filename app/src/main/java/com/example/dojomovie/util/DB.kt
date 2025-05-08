@@ -47,7 +47,7 @@ class DB {
             while (cursorTransaction.moveToNext()){
                 var id = cursorTransaction.getInt(0)
                 var userId = cursorTransaction.getInt(1)
-                var filmId = cursorTransaction.getInt(2)
+                var filmId = cursorTransaction.getString(2)
                 var quantity = cursorTransaction.getInt(3)
                 var temp = Transaction(id, userId, filmId, quantity)
                 transactionList.add(temp)
@@ -87,7 +87,7 @@ class DB {
             )
         }
 
-        fun insertNewTransaction(ctx: Context, userId: Int, filmId: Int, quantity: Int){
+        fun insertNewTransaction(ctx: Context, userId: Int, filmId: String, quantity: Int){
             // generate id
             var id = 1
             if(userList.size >= 1){
@@ -99,7 +99,7 @@ class DB {
             // insert in SQLite
             var helper = Helper(ctx)
             var db = helper.writableDatabase
-            db.execSQL("INSERT INTO transactions (film_title, film_image, film_price)" +
+            db.execSQL("INSERT INTO transactions (user_id, film_id, quantity)" +
                     "VALUES ('"+userId+"', '"+filmId+"', '"+quantity+"')"
             )
         }
@@ -128,6 +128,36 @@ class DB {
         fun signOut(){
             REGISTERED_USER = null
             LOGGED_IN_USER = null
+        }
+
+        fun getTransactionHistory(context: Context, userId: Int): MutableList<Transaction>{
+            val transactions = mutableListOf<Transaction>()
+            val helper = Helper(context)
+            val db = helper.readableDatabase
+            val cursor = db.rawQuery("SELECT * FROM transactions WHERE user_id LIKE ${userId}", null)
+
+            if (cursor.moveToFirst()) {
+                do {
+                    val id = cursor.getInt(0)
+                    val userId = cursor.getInt(1)
+                    val filmId = cursor.getString(2)
+                    val quantity = cursor.getInt(3)
+                    transactions.add(Transaction(id, userId, filmId, quantity))
+                } while (cursor.moveToNext())
+            }
+
+            cursor.close()
+            db.close()
+            return transactions
+        }
+
+        fun getFilmDetail(filmId: String): Film? {
+            for(film in filmList){
+                if(film.id == filmId){
+                    return film
+                }
+            }
+            return null
         }
 
     }

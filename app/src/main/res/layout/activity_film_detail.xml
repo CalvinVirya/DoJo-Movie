@@ -1,10 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FilmDetailActivity">
+    tools:context=".FilmDetailActivity"
+    android:orientation="vertical"
+    android:background="#272822">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/ivBack"
+            android:background="@drawable/ic_launcher_background"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sarabun_bold"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tvMovieBar"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="#E9BE5F"
+        android:gravity="center"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/ivMoviePoster"
+            android:layout_width="172dp"
+            android:layout_height="257dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_launcher_background"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="title"
+        android:textSize="20sp"
+        android:fontFamily="@font/sarabun_bold"
+        android:textColor="@color/white"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/tvMovieTitle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:id="@+id/tvMoviePrice"
+        android:textColor="@color/white"
+        android:fontFamily="@font/sarabun_bold"
+        android:textSize="24sp"
+        android:text="price"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantity:"
+        android:fontFamily="@font/sarabun_regular"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"/>
+    
+    <EditText
+        android:layout_width="54dp"
+        android:layout_height="40dp"
+        android:background="@drawable/edit_text_custom"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:id="@+id/etQuantity"
+        android:inputType="number"
+        android:textColor="@color/white"
+        android:fontFamily="@font/sarabun_bold"
+        android:gravity="center"
+        android:textSize="14sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                android:textColor="@color/white"
+                android:fontFamily="@font/sarabun_regular"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tvTotalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:fontFamily="@font/sarabun_bold"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnBuy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="5dp"
+            android:backgroundTint="#E9BE5F"
+            android:layout_weight="1"
+            android:text="Buy"
+            android:textColor="#272822"
+            android:textSize="16sp"
+            android:fontFamily="@font/sarabun_bold"
+            app:cornerRadius="10dp"/>
+    </LinearLayout>
+
+</LinearLayout>

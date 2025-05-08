@@ -88,6 +88,7 @@ class OtpPage : AppCompatActivity() {
                     val editor = sharedPreferences.edit()
                     editor.putBoolean("isLoggedIn", true)
                     editor.putString("userPhoneNumber", phoneLogin)
+                    editor.putInt("userId", DB.LOGGED_IN_USER!!.id)
                     editor.apply()
 
 

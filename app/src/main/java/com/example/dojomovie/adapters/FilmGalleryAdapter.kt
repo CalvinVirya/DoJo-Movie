@@ -32,7 +32,7 @@ class FilmGalleryAdapter(
 
         fun setValue(){
             tvFilmTitle.text = film.title
-            tvFilmPrice.text = film.price.toString()
+            tvFilmPrice.text = "Rp${film.price.toString()}"
 
 //            TODO("Bikin glide buat gambar sama siapin link gambar")
 

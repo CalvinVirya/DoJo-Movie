@@ -7,12 +7,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HistoryActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#272822">
 
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/ivBack"
+            android:background="@drawable/ic_launcher_background"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sarabun_bold"
+            android:gravity="center"
+            android:text="History"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="History page"
-        android:layout_gravity="center"/>
+        android:id="@+id/rvHistoryList"
+        tools:listitem="@layout/list_item_transaction"/>
 
 </LinearLayout>
