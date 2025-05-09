@@ -3,12 +3,14 @@ package com.example.dojomovie.adapters
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dojomovie.FilmDetailActivity
 import com.example.dojomovie.R
@@ -34,7 +36,10 @@ class FilmGalleryAdapter(
             tvFilmTitle.text = film.title
             tvFilmPrice.text = "Rp${film.price.toString()}"
 
-//            TODO("Bikin glide buat gambar sama siapin link gambar")
+            val inputStream = itemView.context.assets.open(film.image)
+            val drawable = Drawable.createFromStream(inputStream, null)
+            ivFilmImage.setImageDrawable(drawable)
+            ivFilmImage.background = null
 
         }
 

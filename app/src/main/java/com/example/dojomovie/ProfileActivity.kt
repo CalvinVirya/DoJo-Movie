@@ -1,5 +1,6 @@
 package com.example.dojomovie
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dojomovie.util.DB
 
@@ -46,6 +48,20 @@ class ProfileActivity : AppCompatActivity() {
         tvPhone.setText("+62" + userPhoneNumber)
 
         btnLogout.setOnClickListener{
+            confirmationDialog(this)
+        }
+
+        ivBack.setOnClickListener{
+            finish()
+        }
+    }
+
+    fun confirmationDialog(context: Context){
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Logout")
+        builder.setMessage("Are you sure want to Logout?")
+
+        builder.setPositiveButton("OK"){_,_ ->
             val sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putBoolean("isLoggedIn", false)
@@ -60,8 +76,9 @@ class ProfileActivity : AppCompatActivity() {
             finish()
         }
 
-        ivBack.setOnClickListener{
-            finish()
-        }
+        builder.setNegativeButton("Cancel", null)
+
+        val dialog = builder.create()
+        dialog.show()
     }
 }

@@ -69,6 +69,12 @@ class LoginActivity : AppCompatActivity() {
 
         if (DB.REGISTERED_USER != null){
             var intent = Intent(LoginActivity@this, HomeActivity::class.java)
+            val sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putBoolean("isLoggedIn", true)
+            editor.putString("userPhoneNumber", DB.LOGGED_IN_USER!!.phoneNumber)
+            editor.putInt("userId", DB.LOGGED_IN_USER!!.id)
+            editor.apply()
             startActivity(intent)
             finish()
         } else{

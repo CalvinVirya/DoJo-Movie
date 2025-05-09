@@ -2,8 +2,10 @@ package com.example.dojomovie
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -19,15 +21,23 @@ import com.android.volley.toolbox.Volley
 import com.example.dojomovie.adapters.FilmGalleryAdapter
 import com.example.dojomovie.model.Film
 import com.example.dojomovie.util.DB
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
 import org.json.JSONArray
 
-class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     private lateinit var drawerLayout: DrawerLayout
     lateinit var rvFilmList: RecyclerView
     lateinit var filmAdapter: FilmGalleryAdapter
     private lateinit var requestQueue: RequestQueue
+    lateinit var ivJumbotron: ImageView
+    private lateinit var mMap: GoogleMap
 
     companion object {
         val filmList = mutableListOf<Film>()
@@ -40,9 +50,17 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawerLayout = findViewById(R.id.drawer_layout)
 
+        ivJumbotron = findViewById(R.id.ivJumbotron)
+
         rvFilmList = findViewById(R.id.rvFilmList)
 
         requestQueue = Volley.newRequestQueue(this@HomeActivity)
+
+        val assetManager = assets
+        val inputStream = assetManager.open("jumbotron.png")
+        val drawable = Drawable.createFromStream(inputStream, null)
+        ivJumbotron.setImageDrawable(drawable)
+        ivJumbotron.background = null
 
         filmAdapter = FilmGalleryAdapter(filmList, this@HomeActivity)
         rvFilmList.layoutManager = object : LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false) {
@@ -67,7 +85,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         requestQueue.add(request)
 
-
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -79,6 +96,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.drawerArrowDrawable.color = Color.parseColor("#E9BE5F")
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -106,10 +126,17 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun parseJson(jsonArray: JSONArray): MutableList<Film> {
         val result = mutableListOf<Film>()
+
+        val imageList = ArrayList<String>()
+
+        imageList.add("kongzilla.png")
+        imageList.add("final_fantalion.png")
+        imageList.add("bond_jampshoot.png")
+
         for (i in 0 until jsonArray.length()) {
             val obj = jsonArray.getJSONObject(i)
             val id = obj.getString("id")
-            val image = obj.getString("image")
+            val image = imageList[i]
             val price = obj.getInt("price")
             val title = obj.getString("title")
 
@@ -117,6 +144,14 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             DB.insertNewFilm(this@HomeActivity, id, title, image, price)
         }
         return result
+    }
+
+    override fun onMapReady(p0: GoogleMap) {
+        mMap = p0
+
+        val DoJoMovie = LatLng(-6.2088, 106.8456)
+        mMap.addMarker(MarkerOptions().position(DoJoMovie).title("DoJo Movie"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DoJoMovie, 15.0f))
     }
 
 }

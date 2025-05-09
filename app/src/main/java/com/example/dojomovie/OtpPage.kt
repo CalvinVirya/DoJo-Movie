@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.telephony.SmsManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -23,7 +24,7 @@ class OtpPage : AppCompatActivity() {
     lateinit var tvCountdown: TextView
     lateinit var smsManager: SmsManager
     lateinit var btnVerify: Button
-    lateinit var pvOtp: TextView
+    lateinit var pvOtp: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,34 +74,43 @@ class OtpPage : AppCompatActivity() {
         }
 
         btnVerify.setOnClickListener{
-            if (otp == pvOtp.text.toString()){
-                if (DB.REGISTERED_USER != null){
-                    if (phoneRegist != null && passwordRegist != null) {
-                        DB.insertNewUser(this@OtpPage, phoneRegist, passwordRegist)
+
+            if (!validateInput(pvOtp)){
+                if (otp == pvOtp.text.toString()){
+                    if (DB.REGISTERED_USER != null){
+                        if (phoneRegist != null && passwordRegist != null) {
+                            DB.insertNewUser(this@OtpPage, phoneRegist, passwordRegist)
+                        }
+
+                        var intent = Intent(OtpPage@this, LoginActivity::class.java)
+                        startActivity(intent)
+
+                        finish()
+                    } else if (DB.LOGGED_IN_USER != null){
+                        val sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putBoolean("isLoggedIn", true)
+                        editor.putString("userPhoneNumber", phoneLogin)
+                        editor.putInt("userId", DB.LOGGED_IN_USER!!.id)
+                        editor.apply()
+
+
+                        var intent = Intent(OtpPage@this, HomeActivity::class.java)
+                        startActivity(intent)
+
+                        finish()
                     }
-
-                    var intent = Intent(OtpPage@this, LoginActivity::class.java)
-                    startActivity(intent)
-
-                    finish()
-                } else if (DB.LOGGED_IN_USER != null){
-                    val sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE)
-                    val editor = sharedPreferences.edit()
-                    editor.putBoolean("isLoggedIn", true)
-                    editor.putString("userPhoneNumber", phoneLogin)
-                    editor.putInt("userId", DB.LOGGED_IN_USER!!.id)
-                    editor.apply()
-
-
-                    var intent = Intent(OtpPage@this, HomeActivity::class.java)
-                    startActivity(intent)
-
-                    finish()
+                } else{
+                    Toast.makeText(applicationContext, "OTP Invalid", Toast.LENGTH_SHORT).show()
                 }
             } else{
-                Toast.makeText(applicationContext, "OTP Invalid", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Cannot be empty", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun validateInput(editText: EditText) : Boolean{
+        return editText.text.toString().trim().isEmpty()
     }
 
     fun startCountdown(){

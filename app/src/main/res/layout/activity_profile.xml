@@ -75,5 +75,5 @@
         android:textSize="16sp"
         android:fontFamily="@font/sarabun_bold"
         app:cornerRadius="10dp"
-        android:layout_marginTop="500dp"/>
+        android:layout_marginTop="480dp"/>
 </LinearLayout>

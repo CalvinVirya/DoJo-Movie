@@ -1,5 +1,6 @@
 package com.example.dojomovie
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.media.Image
 import android.os.Bundle
@@ -54,7 +55,7 @@ class FilmDetailActivity : AppCompatActivity() {
         ivBack.background = null
 
         val assetManagerMoviePoster = assets
-        val inputStreamMoviePoster = assetManagerMoviePoster.open("logoinvers.png")
+        val inputStreamMoviePoster = assetManagerMoviePoster.open(film?.image ?: "logoinvers.png")
         val drawableMoviePoster = Drawable.createFromStream(inputStreamMoviePoster, null)
         ivMoviePoster.setImageDrawable(drawableMoviePoster)
         ivMoviePoster.background = null
@@ -78,20 +79,29 @@ class FilmDetailActivity : AppCompatActivity() {
 
         btnBuy.setOnClickListener{
             var quantity = etQuantity.text.toString().toIntOrNull() ?: 1
-            if (film != null) {
-                if(DB.LOGGED_IN_USER != null){
-                    DB.insertNewTransaction(this@FilmDetailActivity, DB.LOGGED_IN_USER!!.id, film.id, quantity)
-                    Toast.makeText(applicationContext, "berhasil", Toast.LENGTH_SHORT).show()
-                } else{
-                    val sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE)
-                    val userId = sharedPreferences.getInt("userId", -1)
-                    DB.insertNewTransaction(this@FilmDetailActivity, userId, film.id, quantity)
-                    Toast.makeText(applicationContext, "berhasil", Toast.LENGTH_SHORT).show()
-                }
 
-                btnBuy.isEnabled = false
+            if(!validateInput(etQuantity) && quantity >= 1){
+                if (film != null) {
+                    if(DB.LOGGED_IN_USER != null){
+                        DB.insertNewTransaction(this@FilmDetailActivity, DB.LOGGED_IN_USER!!.id, film.id, quantity)
+                        Toast.makeText(applicationContext, "Successfully Purchased", Toast.LENGTH_SHORT).show()
+                    } else{
+                        val sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE)
+                        val userId = sharedPreferences.getInt("userId", -1)
+                        DB.insertNewTransaction(this@FilmDetailActivity, userId, film.id, quantity)
+                        Toast.makeText(applicationContext, "Successfully Purchased", Toast.LENGTH_SHORT).show()
+                    }
+
+                    finish()
+                }
+            } else{
+                Toast.makeText(applicationContext, "Cannot be empty and must be greater than 0", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun validateInput(editText: EditText) : Boolean{
+        return editText.text.toString().trim().isEmpty()
     }
 
     fun totalPrice(moviePrice: Int, quantity: Int) {

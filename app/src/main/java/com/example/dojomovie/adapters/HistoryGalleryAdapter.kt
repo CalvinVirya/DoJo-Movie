@@ -28,12 +28,10 @@ class HistoryGalleryAdapter (
 
         fun setValue(){
             var film = DB.getFilmDetail(transaction.filmId)
-            Toast.makeText(itemView.context, transaction.filmId, Toast.LENGTH_SHORT).show()
             if (film != null) {
                 tvHistoryTitle.text = film.title
-                tvHistoryPrice.text = film.price.toString()
-                tvHistoryQuantity.text = transaction.quantity.toString()
-                Toast.makeText(itemView.context, "Film: ${film.title}", Toast.LENGTH_SHORT).show()
+                tvHistoryPrice.text = "Rp${film.price.toString()}"
+                tvHistoryQuantity.text = "x${transaction.quantity.toString()}"
             } else{
                 Toast.makeText(itemView.context, "film not found", Toast.LENGTH_SHORT).show()
             }

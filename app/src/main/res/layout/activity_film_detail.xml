@@ -43,7 +43,7 @@
         <ImageView
             android:id="@+id/ivMoviePoster"
             android:layout_width="172dp"
-            android:layout_height="257dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:background="@drawable/ic_launcher_background"/>
 
