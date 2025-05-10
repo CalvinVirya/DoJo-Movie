@@ -44,9 +44,6 @@ class OtpPage : AppCompatActivity() {
         var phoneLogin = DB.LOGGED_IN_USER?.phoneNumber
         var otp = generateOTP()
 
-        //TODO: JANGAN LUPA DIHAPUS YA BANG NANTI KETAHUAN RAHASIA KITA XIXIXI
-        pvOtp.setText(otp)
-
         if (phoneRegist != null) {
             checkSMSPermission(phoneRegist, otp)
         } else if(phoneLogin != null){
